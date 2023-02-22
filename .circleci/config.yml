@@ -82,10 +82,12 @@ jobs:
       keys: [frontend-test]
 
       # Your job code here
-      cd frontend
-      npm install
-      npm run build
-
+      - run:
+          name: Frontend-test
+          command: |
+            cd frontend
+            npm install
+            npm run build
       - save_cache:
           paths: [frontend/node_modules]
           key: backend-build
@@ -101,10 +103,17 @@ jobs:
       # Restore from cache
       restore_cache:
       keys: [backend-test]
+
       # Your job code here
-           cd backend
-           npm install
-           npm run build 
+      - run:
+          name: backend-test
+          command:
+            cd backend
+            npm install
+            npm run build 
+      - save_cache: 
+          paths: [backend/node_modules]
+          key: backend-test
   scan-frontend:
     docker:
       # Docker image here
@@ -117,6 +126,7 @@ jobs:
       restore_cache:
       keys: [frontend-scan]
       # Your job code here
+      - ru
 
   scan-backend:
     docker:
