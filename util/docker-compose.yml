@@ -1,5 +1,6 @@
 version: "3"
 
+# run dev locally using docker composer
 services:
   database:
     image: "postgres"
