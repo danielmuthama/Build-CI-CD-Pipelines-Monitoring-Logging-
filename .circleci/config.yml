@@ -581,7 +581,6 @@ jobs:
               --tags project=udacity-backend \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
-              --stack-name udapeople-backend-3f36583
 
 Exited with code exit status 255
 
@@ -616,7 +615,7 @@ Exited with code exit status 255
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: [""]
+          fingerprints: ["de:c6:5e:b8:d9:28:4a:8f:17:33:bd:bd:98:2c:b0:d3"]
       - attach_workspace:
           at: ~/
       - run:
