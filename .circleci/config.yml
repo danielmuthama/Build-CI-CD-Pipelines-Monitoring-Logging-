@@ -581,9 +581,7 @@ jobs:
               --tags project=udacity-backend \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
-              --stack-name udapeople-backend-3f36583
 
-# Exited with code exit status 255
 
       - run:
           name: Ensure front-end infrastructure exist
