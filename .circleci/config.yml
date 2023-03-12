@@ -15,6 +15,7 @@ commands:
             unzip awscliv2.zip
             sudo ./aws/install
 
+
   install_ansible:
     description: Install Ansible
     steps:
@@ -25,6 +26,7 @@ commands:
             sudo apt install software-properties-common -y
             sudo apt install ansible -y 
             sudo add-apt-repository --yes --update ppa:ansible/ansible
+
 
 
   install_nodejs:
