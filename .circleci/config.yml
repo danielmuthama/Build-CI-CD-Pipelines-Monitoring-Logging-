@@ -26,8 +26,12 @@ commands:
       - run:
           name: Install Node.js 13
           command: |
-            curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+            # Install Node.js LTS version as our base Node.js version
+            curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
             sudo apt install -y nodejs
+            # Use n version manager to use Node.js v13.8.0
+            sudo npm install --global n
+            sudo n 13.8.0
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -78,6 +82,7 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-deps
+
   build-backend:
     docker:
       - image: cimg/node:13.8.0
@@ -94,6 +99,7 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-deps
+
   test-frontend:
     docker:
       - image: cimg/node:13.8.0
@@ -133,6 +139,7 @@ jobs:
             cd frontend
             npm install
             npm audit fix --force --audit-level=critical
+            npm audit fix --force --audit-level=critical
             npm audit --audit-level=critical
   scan-backend:
     docker:
@@ -149,6 +156,7 @@ jobs:
             npm audit fix --force --audit-level=critical
             npm audit fix --force --audit-level=critical
             npm audit --audit-level=critical
+  
   deploy-infrastructure:
     docker:
       - image: cimg/base:stable
@@ -163,6 +171,7 @@ jobs:
               --tags project=udapeople \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
+
       - run:
           name: Ensure front-end infrastructure exist
           command: |
@@ -184,7 +193,7 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      
+
       - destroy-environment
 
   configure-infrastructure:
@@ -195,7 +204,7 @@ jobs:
       - install_awscli
       - install_ansible
       - add_ssh_keys:
-          fingerprints: ["d9:06:93:7c:dd:ac:25:bf:3d:f3:10:f5:5d:69:f6:67"]
+          fingerprints: ["de:c6:5e:b8:d9:28:4a:8f:17:33:bd:bd:98:2c:b0:d3"]
       - attach_workspace:
           at: ~/
       - run:
@@ -205,6 +214,7 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment
+
   run-migrations:
     docker:
       - image: cimg/node:13.8.0
@@ -226,6 +236,7 @@ jobs:
             fi
       - destroy-environment
       - revert-migrations
+
   deploy-frontend:
     docker:
       - image: cimg/base:stable
@@ -257,6 +268,7 @@ jobs:
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - destroy-environment
       - revert-migrations
+
   deploy-backend:
     docker:
       - image: cimg/base:stable
@@ -266,7 +278,7 @@ jobs:
       - install_ansible
       - install_nodejs
       - add_ssh_keys:
-          fingerprints: ["d9:06:93:7c:dd:ac:25:bf:3d:f3:10:f5:5d:69:f6:67"]
+          fingerprints: ["d5:a4:0d:bd:36:a7:d2:03:2c:10:93:6a:7c:d1:a7:26"]
       - attach_workspace:
           at: ~/
       - restore_cache:
@@ -354,6 +366,7 @@ jobs:
               --stack-name InitialStack
       - destroy-environment
       - revert-migrations
+
   cleanup:
     docker:
       - image: cimg/base:stable
@@ -408,3 +421,5 @@ workflows:
           requires: [smoke-test]
       - cleanup:
           requires: [cloudfront-update]
+
+
