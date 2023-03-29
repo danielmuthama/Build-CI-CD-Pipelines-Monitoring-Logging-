@@ -146,7 +146,7 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory
-      - destroy-environment
+      # - destroy-environment
 
 
 
