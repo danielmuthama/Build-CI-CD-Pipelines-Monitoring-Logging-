@@ -3,34 +3,34 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@2.0.3
 
-commands:
-  destroy-environment:
-    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.  
-    steps:
-      - run:
-          name: Destroy environments
-          when: on_fail        
-          command: |
-              aws s3 rm s3://udapeople-cicd-${CIRCLE_WORKFLOW_ID:0:7} --recursive             
-              aws cloudformation delete-stack \
-                  --stack-name "udapeople-backend-cicd-${CIRCLE_WORKFLOW_ID:0:7}"
-              aws cloudformation delete-stack \
-                  --stack-name "udapeople-frontend-cicd-${CIRCLE_WORKFLOW_ID:0:7}"
+# commands:
+#   destroy-environment:
+#     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.  
+#     steps:
+#       - run:
+#           name: Destroy environments
+#           when: on_fail        
+#           command: |
+#               aws s3 rm s3://udapeople-cicd-${CIRCLE_WORKFLOW_ID:0:7} --recursive             
+#               aws cloudformation delete-stack \
+#                   --stack-name "udapeople-backend-cicd-${CIRCLE_WORKFLOW_ID:0:7}"
+#               aws cloudformation delete-stack \
+#                   --stack-name "udapeople-frontend-cicd-${CIRCLE_WORKFLOW_ID:0:7}"
 
-  revert-migrations:
-    description: Revert the last migration if successfully run in the current workflow.   
-    steps:
-      - run:
-          name: Revert migrations
-          when: on_fail
-          command: |
-            SUCCESS=$(curl --insecure https://kvdb.io/REhawtxA3zb3YUJiGtCh16/migration_${CIRCLE_WORKFLOW_ID:0:7})
-            if (( $SUCCESS == 1 )); 
-            then
-              cd ~/project/backend
-              npm install
-              npm run migration:revert
-            fi
+#   revert-migrations:
+#     description: Revert the last migration if successfully run in the current workflow.   
+#     steps:
+#       - run:
+#           name: Revert migrations
+#           when: on_fail
+#           command: |
+#             SUCCESS=$(curl --insecure https://kvdb.io/REhawtxA3zb3YUJiGtCh16/migration_${CIRCLE_WORKFLOW_ID:0:7})
+#             if (( $SUCCESS == 1 )); 
+#             then
+#               cd ~/project/backend
+#               npm install
+#               npm run migration:revert
+#             fi
 
 jobs:
   build-frontend:
