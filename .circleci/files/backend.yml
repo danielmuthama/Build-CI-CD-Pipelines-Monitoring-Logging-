@@ -33,13 +33,13 @@ Resources:
       InstanceType: t2.micro
       SecurityGroups:
         - Ref: InstanceSecurityGroup
-      KeyName: udacity-cicd
+      KeyName: udacity
       ImageId: ami-0d70546e43a941d70
       Tags:
         - Key: Name
           Value: !Sub backend-cicd-${ID}
         - Key: Project
-          Value: Udapeople-cicd
+          Value: Udapeople
 
   InstanceEIP:
     Type: AWS::EC2::EIP
