@@ -37,9 +37,9 @@ Resources:
       ImageId: ami-0d70546e43a941d70
       Tags:
         - Key: Name
-          Value: !Sub backend-${ID}
+          Value: !Sub backend-cicd-${ID}
         - Key: Project
-          Value: Udapeople
+          Value: Udapeople-cicd
 
   InstanceEIP:
     Type: AWS::EC2::EIP
