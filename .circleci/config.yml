@@ -122,6 +122,7 @@ jobs:
 
 
 
+
   deploy-infrastructure:
     docker:
       - image: amazon/aws-cli
@@ -148,6 +149,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory
       - destroy-environment
+
 
 
   configure-infrastructure:
