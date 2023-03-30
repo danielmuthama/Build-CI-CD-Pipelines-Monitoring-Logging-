@@ -167,7 +167,6 @@ jobs:
           key: scan-backend-test           
 
 
-
   deploy-infrastructure:
     docker:
       # Docker image here that supports AWS CLI
@@ -189,7 +188,6 @@ jobs:
               --tags project=udapeople
             
                
-
              
       - run:
           name: Ensure front-end infrastructure exist
@@ -219,6 +217,8 @@ jobs:
             # --output text 
             # )
             # echo ${BACKEND_IP}
+
+            
       - persist_to_workspace:
           root: ~/
           paths:
