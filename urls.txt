@@ -1,2 +1,0 @@
-URL01 = https://github.com/vasudevln/auto-deploy-superpowers
-URL02 = http://udapeople-01440b4.s3-website-us-east-1.amazonaws.com
